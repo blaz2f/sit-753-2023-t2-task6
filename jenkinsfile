@@ -37,6 +37,7 @@ pipeline {
         stage('Security Scan') {
             steps {
                 echo 'Security Scan was done using JFrog tool'
+                echo 'Security Scan was done using Datadog tool'
             }
             post {
                 success {
