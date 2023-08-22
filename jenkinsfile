@@ -1,0 +1,68 @@
+pipeline {
+    agent any
+    environment {
+    DIRECTORY_PATH= "sit752/week6/"
+    STAGING_ENVIRONMENT= "BohdanStaging"
+    PRODUCTION_ENVIRONMENT= "BohdanMaster"
+    }
+    stages {
+        stage('Build') {
+            steps {
+                echo "Fetch the source code from the directory path $DIRECTORY_PATH"
+                echo 'Release Build was made using Gradle tool'
+            }
+        }
+        stage('Unit and Integration Tests') {
+            steps {
+                echo 'Running unit tests using Selenium'
+                echo 'Running integration tests using Selenium'
+                echo 'Unit and Integration Tests passed'
+            }
+            post {
+                success {
+                        mail to: "tbvsev@gmail.com",
+                        subject: "Unit and Intergation Tests Status",
+                        body: "Unit and integration test were succeeded"
+                }
+            }
+        }
+        stage('Code Analysis') {
+            steps {
+                echo 'Code Analysis was passed using Pylint tool for Python code'
+                echo 'Code Analysis was passed using Cppcheck tool for C# code'
+
+            }
+        }
+        stage('Security Scan') {
+            steps {
+                echo 'Security Scan was done using JFrog tool'
+            }
+            post {
+                success {
+                        mail to: "tbvsev@gmail.com",
+                        subject: "Security Scan Status",
+                        body: "Security Scan was passed"
+                          }
+                }
+        }
+        stage('Integration Tests on Staging') {
+            steps {
+                echo "Integration tests using Selenium was passed on $STAGING_ENVIRONMENT environment was passed"
+            }
+             post {
+                success {
+                        mail to: "tbvsev@gmail.com",
+                        subject: "Integration Tests Staging Status",
+                        body: "Integration test on $STAGING_ENVIRONMENT environment passed"
+                        // attach  log file from jenkins console 
+                         }
+                }
+        }
+        stage('Deploy to Production') {
+            steps {
+                echo "Delploying to $PRODUCTION_ENVIRONMENT server"
+            }
+        }
+    }
+}
+
