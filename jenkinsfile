@@ -30,6 +30,7 @@ pipeline {
             steps {
                 echo 'Code Analysis was passed using Pylint tool for Python code'
                 echo 'Code Analysis was passed using Cppcheck tool for C# code'
+                echo 'Code Analysis was passed using DeepScan tool for JS code'
 
             }
         }
