@@ -53,10 +53,10 @@ pipeline {
             }
              post {
                 success {
-                        mail to: "tbvsev@gmail.com",
-                        subject: "Integration Tests Staging Status",
-                        body: "Integration test on $STAGING_ENVIRONMENT environment passed"
-                        // attach  log file from jenkins console 
+                        emailext (to: 'tbvsev@gmail.com',
+                        attachLog: true,
+                        body: 'Integration Tests Staging Status Passed and Ready to Deploy',
+                        subject: 'Ready to Delpoy')
                          }
                 }
         }
